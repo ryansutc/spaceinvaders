@@ -1,7 +1,9 @@
+import { Starfield } from "./starfield.js";
 var container = document.getElementById('container');
-var starfield = new Starfield();
-starfield.initialise(container);
+var starfield = new Starfield(container);
 starfield.start();
+
+document.getElementById("randomise").onclick = randomise();
 
 function randomise() {
   starfield.stop();

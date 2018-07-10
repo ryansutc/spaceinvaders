@@ -1,60 +1,51 @@
 /*
-	Starfield lets you take a div and turn it into a starfield.
-
+  Starfield lets you take a div and turn it into a starfield.
 */
 
-//	Define the starfield class.
-function Starfield() {
+//	Define the starfield class and initialize.
+function Starfield(div) {
   this.fps = 30;
-  this.canvas = null;
-  this.width = 0;
-  this.height = 0;
+  this.width = window.innerWidth;
+  this.height = window.innerHeight;
   this.minVelocity = 15;
   this.maxVelocity = 30;
   this.stars = 100;
   this.intervalId = 0;
-}
-
-//	The main function - initialises the starfield.
-Starfield.prototype.initialise = function(div) {
-  var self = this;
-
-  //	Store the div.
   this.containerDiv = div;
-  self.width = window.innerWidth;
-  self.height = window.innerHeight;
 
-  window.addEventListener('resize', function resize(event) {
-    self.width = window.innerWidth;
-    self.height = window.innerHeight;
-    self.canvas.width = self.width;
-    self.canvas.height = self.height;
-    self.draw();
-  });
-
-  //	Create the canvas.
-  var canvas = document.createElement('canvas');
-  div.appendChild(canvas);
-  this.canvas = canvas;
+  this.canvas = document.createElement('canvas');
+  div.appendChild(this.canvas);
   this.canvas.width = this.width;
   this.canvas.height = this.height;
-};
+
+  var _this = this;
+  window.addEventListener('resize', function resize(event) {
+    _this.width = window.innerWidth;
+    _this.height = window.innerHeight;
+    _this.canvas.width = _this.width;
+    _this.canvas.height = _this.height;
+    _this.draw();
+  });
+}
 
 Starfield.prototype.start = function() {
 
   //	Create the stars.
   var stars = [];
   for (var i = 0; i < this.stars; i++) {
-    stars[i] = new Star(Math.random() * this.width, Math.random() * this.height, Math.random() * 3 + 1,
+    stars[i] = new Star(Math.random() *
+      this.width, Math.random() *
+      this.height, Math.random() * 3 + 1,
       (Math.random() * (this.maxVelocity - this.minVelocity)) + this.minVelocity);
   }
   this.stars = stars;
 
-  var self = this;
+  var _this = this;
+
   //	Start the timer.
-  this.intervalId = setInterval(function() {
-    self.update();
-    self.draw();
+  _this.intervalId = setInterval(function() {
+    _this.update();
+    _this.draw();
   }, 1000 / this.fps);
 };
 
@@ -99,3 +90,5 @@ function Star(x, y, size, velocity) {
   this.size = size;
   this.velocity = velocity;
 }
+
+export { Starfield, Star };
