@@ -1,0 +1,29 @@
+{
+  "name": "spaceinvaders",
+  "version": "1.0.0",
+  "description": "space invaders converted to ES6/Typescript",
+  "main": "main.js",
+  "presets": [
+    "env"
+  ],
+  "dependencies": {
+    "babel-preset-env": "^1.7.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel": "./node_modules/.bin/babel src/js/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryansutc/spaceinvaders.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryansutc/spaceinvaders/issues"
+  },
+  "homepage": "https://github.com/ryansutc/spaceinvaders#readme"
+}
