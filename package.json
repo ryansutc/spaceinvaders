@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "space invaders converted to ES6/Typescript",
   "main": "main.js",
-  "presets": [
-    "env"
-  ],
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
   "dependencies": {
     "babel-preset-env": "^1.7.0"
   },
