@@ -3,7 +3,11 @@
 */
 
 class Star {
-  constructor(x, y, size, velocity) {
+  x: number;
+  y: number;
+  readonly size: number;
+  readonly velocity: number;
+  constructor(x: number, y: number, size: number, velocity: number) {
     this.x = x;
     this.y = y;
     this.size = size;
@@ -12,13 +16,23 @@ class Star {
 }
 //	Define the starfield class and initialize.
 class Starfield {
-  constructor(div) {
-    this.fps = 30;
+  static readonly fps = 30;
+  width: number;
+  height: number;
+  minVelocity: number;
+  maxVelocity: number;
+  stars: Star[]; //array of star objects
+  starCount: number;
+  intervalId: any;
+  containerDiv: HTMLElement;
+  canvas: any;
+
+  constructor(div: HTMLElement) {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.minVelocity = 15;
     this.maxVelocity = 30;
-    this.stars = 100;
+    this.starCount = 100;
     this.intervalId = 0;
     this.containerDiv = div;
 
@@ -39,8 +53,8 @@ class Starfield {
 
   start() {
     //	Create the stars.
-    var stars = [];
-    for (var i = 0; i < this.stars; i++) {
+    let stars = [];
+    for (let i = 0; i < this.starCount; i++) {
       stars[i] = new Star(Math.random() *
         this.width, Math.random() *
         this.height, Math.random() * 3 + 1,
@@ -48,13 +62,13 @@ class Starfield {
     }
     this.stars = stars;
 
-    var _this = this;
+    let _this = this; // not sure how to avoid this closure in typescript, is there better way?
 
     //	Start the timer.
-    _this.intervalId = setInterval(function() {
+    this.intervalId = setInterval(function () {
       _this.update();
       _this.draw();
-    }, 1000 / this.fps);
+    }, 1000 / Starfield.fps);
   };
 
   stop() {
@@ -62,10 +76,10 @@ class Starfield {
   };
 
   update() {
-    var dt = 1 / this.fps;
+    let dt = 1 / Starfield.fps;
 
-    for (var i = 0; i < this.stars.length; i++) {
-      var star = this.stars[i];
+    for (let i = 0; i < this.stars.length; i++) {
+      let star = this.stars[i];
       star.y += dt * star.velocity;
       //	If the star has moved from the bottom of the screen, spawn it at the top.
       if (star.y > this.height) {
@@ -78,7 +92,7 @@ class Starfield {
   draw() {
 
     //	Get the drawing context.
-    var ctx = this.canvas.getContext("2d");
+    let ctx = this.canvas.getContext("2d");
 
     //	Draw the background.
     ctx.fillStyle = '#000000';
@@ -86,8 +100,8 @@ class Starfield {
 
     //	Draw stars.
     ctx.fillStyle = '#ffffff';
-    for (var i = 0; i < this.stars.length; i++) {
-      var star = this.stars[i];
+    for (let i = 0; i < this.stars.length; i++) {
+      let star = this.stars[i];
       ctx.fillRect(star.x, star.y, star.size, star.size);
     }
   };
